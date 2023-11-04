@@ -6,15 +6,13 @@ CFLAGS = -Wall -Wextra -O3 `pkg-config --cflags sdl2 SDL2_image`
 LDFLAGS =
 LDLIBS = `pkg-config --libs sdl2 SDL2_image` -lm
 
-all: solver XORNN filters 
+all: pictureProcess
 
-SRC = solver.c XORNN.c filters.c 
+SRC = pictureProcess.c 
 OBJ = ${SRC:.c=.o}
 EXE = ${SRC:.c=}
 
-solver: solver.o
-XORNN: XORNN.o
-filters: filters.o
+pictureProcess: pictureProcess.o
 
 .PHONY: clean
 

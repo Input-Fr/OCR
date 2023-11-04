@@ -20,7 +20,7 @@ int sobel_kernel_y[3][3] = {
 
 SDL_Surface* load_image(const char* path)
 {
-    SDL_Surface* surface =  IMG_Load(path);
+    SDL_Surface* surface = IMG_Load(path);
     SDL_Surface* newSurface = SDL_ConvertSurfaceFormat(surface,SDL_PIXELFORMAT_RGB888,0);
     SDL_FreeSurface(surface);
     return newSurface;
@@ -56,8 +56,8 @@ void surface_to_grayscale(SDL_Surface* surface)
 Uint32 apply_sobel_filter(SDL_Surface* image, int x, int y, int kernel[3][3]) {
     int sum = 0;
 
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
+    for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
             Uint8* pixel = (Uint8*)image->pixels + (y + i) * image->pitch + (x + j) * image->format->BytesPerPixel;
             int gray = (int)pixel[0]; // l'image à été converti en gris avant
 
@@ -65,8 +65,14 @@ Uint32 apply_sobel_filter(SDL_Surface* image, int x, int y, int kernel[3][3]) {
         }
     }
 
-    if (sum < 0) sum = 0;
-    if (sum > 255) sum = 255;
+    if (sum < 0)
+    {
+        sum = 0;
+    }
+    if (sum > 255)
+    {
+        sum = 255;
+    }
 
     return SDL_MapRGB(image->format, sum, sum, sum);
 }
