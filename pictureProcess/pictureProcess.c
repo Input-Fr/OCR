@@ -1,6 +1,5 @@
-
+#include "hough.h"
 #include <SDL2/SDL.h>
-#include <math.h>
 #include <stdio.h>
 #include <math.h>      // pour cos et sin
 #include <err.h>
@@ -189,17 +188,18 @@ void decoup(char* file,int *X, int *Y){
             		SDL_Rect rect;
             		rect.x = x;        
             		rect.y = y;
-
+			rect.w = width;
+			rect.h = height;
             		// Créer un rectangle découpé
             		SDL_Surface* croppedImage = SDL_CreateRGBSurface(0, width, height, image->format->BitsPerPixel, image->format->Rmask, image->format->Gmask, image->format->Bmask, image->format->Amask);
             		SDL_BlitSurface(image, &rect, croppedImage, NULL);
 
             		// le chemin du fichier pour l'image découpée
             		char filename[50];
-            		snprintf(filename, sizeof(filename), "cases/cropped_%d_%d.png", j, i);
+            		snprintf(filename, sizeof(filename), "cases/cropped_%d_%d.bmp", j, i);
 
             		// sauvegarder les images dans le dossier "cases"
-            		IMG_SavePNG(croppedImage, filename);
+            		SDL_SaveBMP(croppedImage, filename);
             		SDL_FreeSurface(croppedImage);
         	}
    	}
@@ -210,20 +210,17 @@ void decoup(char* file,int *X, int *Y){
 }
 
 
-//faire deux tableaux de tailles 100 pour eviter les depassements
- 
-int x[100] = {0};
-int y[100] = {0};
 
-//stocker les positions des extremites des 9 cases
-
-int X[10];
-int Y[10];
 
 
 
 int main(int argc, char *argv[]) {
 
+    int x[100] = {0};
+    int y[100] = {0};
+
+    int X[10];
+    int Y[10];
     /*
     char *command[] = {"mkdir", "cases", NULL};
 
@@ -261,13 +258,15 @@ int main(int argc, char *argv[]) {
  	int j = 0;
 	int k = 0;
 
-   for (int i = 0; i < 100; i++) {
+   for (int i = 0; i < 99; i++) {
         if(x[i+1] - x[i] > 20 || (x[i+1] == 0 && x[i] != 0)){
                 X[j] = x[i];
-                j++;
+		printf("x : %i\n",X[j]);
+		j++;
         }
         if(y[i+1] - y[i] > 20 || (y[i+1] == 0 && y[i] != 0)){
                 Y[k] = y[i];
+		printf("y : %i\n",Y[k]);
                 k++;
         }
 
