@@ -1,7 +1,0 @@
-utilisation makefile : make <filename>
-
-Application d'un filtre à une image : ./filter "chemin vers l'image"
-Detection des lignes/cases de l'image : entrer dans le dossier pictureProcess puis entrer la commande : ./pictureProcess "chemin vers l'image"
-Réseau de neurone entrainé pour apprendre la fonction XOR : ./XORNN
-Solver de sudoku : ./solver "nom de la grid à résoudre"
-Rotation : ./Rotate <filename>
